@@ -1,0 +1,91 @@
+@charset "utf-8";
+@font-face {
+    font-family: "NanumSquareRound";
+    font-style: normal;
+    font-weight: 200;
+    src: url(../NanumSquareRoundL.woff) format("woff");
+    src: url(../NanumSquareRoundL.woff2) format("woff2");
+}
+
+@font-face {
+    font-family: "NanumSquareRound";
+    font-style: normal;
+    font-weight: 400;
+    src: url(../NanumSquareRoundR.woff) format("woff");
+    src: url(../NanumSquareRoundR.woff2) format("woff2");
+}
+
+@font-face {
+    font-family: "NanumSquareRound";
+    font-style: normal;
+    font-weight: 600;
+    src: url(../NanumSquareRoundB.woff) format("woff");
+    src: url(../NanumSquareRoundB.woff2) format("woff2");
+}
+
+@font-face {
+    font-family: "NanumSquareRound";
+    font-style: normal;
+    font-weight: 800;
+    src: url(../NanumSquareRoundEB.woff) format("woff");
+    src: url(../NanumSquareRoundEB.woff2) format("woff2");
+}
+
+:root {
+    --yellow: #FFD438;
+}
+
+html {
+    font-size: 62.5%;
+    font-family: 'NanumSquareRound', sans-serif !important;
+    scroll-behavior: smooth;
+}
+* {
+    font-family: 'NanumSquareRound', sans-serif !important;
+    letter-spacing: -0.02em;
+}
+
+.display-m {
+    display: none;
+}
+.blind {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    clip: rect(0 0 0 0);
+    overflow: hidden;
+}
+.inner-col {
+    position: relative;
+    width: 133rem;
+    max-width: 90%;
+    height: 100%;
+    margin: 0 auto;
+}
+@media screen and (max-width: 1024px) {
+    html {
+        font-size: 10px;
+    }
+    .display-pc {
+        display: none;
+    }
+    .display-m {
+        display: block;
+    }
+}
+@media screen and (max-width: 768px) {
+    html {
+        font-size: 1.31vw;
+    }
+    .display-pc {
+        display: none;
+    }
+    .display-m {
+        display: block;
+    }
+}
+@media screen and (max-width: 380px) {
+    html {
+        font-size: 5px;
+    }
+}
