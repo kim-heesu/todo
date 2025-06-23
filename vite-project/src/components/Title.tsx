@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 type TitleProps = {
-    title: string;
+    title?: string;
 }
 
 const Title = styled.h2`

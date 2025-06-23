@@ -3,23 +3,23 @@ import styled  from "styled-components";
 
 type ModalProps = {
     children: React.ReactNode;
-    size? : 'sm' | 'md' | 'lg'
+    size : 'sm' | 'md' | 'lg'
     // onClose : () => void;
 }
 
-const Modal = styled.div<Modalprops>`
+const Modal = styled.div`
     position: absolute;
     top: 50%;
     left: 50%;
-    width:  ${(props) =>
-        props.size === 'sm' ? '30rem' :
-        props.size === 'md' ? '40rem' :
-        props.size === 'lg' ? '50rem' : 0
+    width:  ${(ModalProps) =>
+        ModalProps.size === 'sm' ? '30rem' :
+        ModalProps.size === 'md' ? '40rem' :
+        ModalProps.size === 'lg' ? '50rem' : 0
     };
-    height:  ${(props) =>
-        props.size === 'sm' ? '30rem' :
-        props.size === 'md' ? '40rem' :
-        props.size === 'lg' ? '50rem' : 0
+    height:  ${(ModalProps) =>
+        ModalProps.size === 'sm' ? '30rem' :
+        ModalProps.size === 'md' ? '40rem' :
+        ModalProps.size === 'lg' ? '50rem' : 0
     };
     background: #fff;
     border-radius: 1.5rem;
@@ -42,13 +42,16 @@ const Overlay = styled.div`
     z-index: -1;
 `;
 
-function ModalCom({children,size='sm'}: ModalProps) {
+function ModalCom({children, size = 'sm'}: ModalProps) {
     return ReactDOM.createPortal(
-        <Modal>
+        <>
+        <Modal className={`modal- ${size}`}>
             <Btnclose />
             {children}
         </Modal>
         <Overlay/>
+        </>,
+        document.getElementById('modalRoot')!
     )
 }
 
