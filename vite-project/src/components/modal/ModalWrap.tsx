@@ -1,35 +1,57 @@
 import ReactDOM from 'react-dom';
 import styled  from "styled-components";
+import { X } from 'lucide-react';
 
 type ModalProps = {
     children: React.ReactNode;
+    modalState: boolean;
+    ModalTitle: string;
     size : 'sm' | 'md' | 'lg'
-    // onClose : () => void;
+    onClose : () => void;
 }
 
+const ModalWrap = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+`;
 const Modal = styled.div`
     position: absolute;
     top: 50%;
     left: 50%;
-    width:  ${(ModalProps) =>
-        ModalProps.size === 'sm' ? '30rem' :
-        ModalProps.size === 'md' ? '40rem' :
-        ModalProps.size === 'lg' ? '50rem' : 0
-    };
-    height:  ${(ModalProps) =>
-        ModalProps.size === 'sm' ? '30rem' :
-        ModalProps.size === 'md' ? '40rem' :
-        ModalProps.size === 'lg' ? '50rem' : 0
-    };
     background: #fff;
     border-radius: 1.5rem;
     padding: 2.4rem;
-    z-index: 999;
+    z-index: 10;
+    overflow: hidden;
+    transform: translate(-50%,-50%);
+    .modal-tit {
+        padding-right: 2rem;
+        font-size: 2rem;
+        font-weight: 600;
+    }
+    &.modal-sm {
+        width: 43rem;
+        height: 37rem;
+    }
+    &.modal-md {
+        width: 63rem;
+        height: 48rem;
+    }
 `;
-const Btnclose = styled.button`
+const ModalContent = styled.div`
+    position: relative;
+    height: 100%;
+    padding-bottom: 5rem;
+`;
+
+const BtnClose = styled.button`
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 2.4rem;
+    right: 2.4rem;
     width: 2rem;
     height: 2rem;
 `;
@@ -37,20 +59,28 @@ const Overlay = styled.div`
     position: absolute;
     top: 50%;
     left: 50%; 
+    width: 100%;
+    height: 100%;
     background: rgba(0,0,0,0.4);
     transform: translate(-50%,-50%);
     z-index: -1;
 `;
 
-function ModalCom({children, size = 'sm'}: ModalProps) {
+function ModalCom(props: ModalProps) {
+    if (!props.modalState) return null;
+
     return ReactDOM.createPortal(
-        <>
-        <Modal className={`modal- ${size}`}>
-            <Btnclose />
-            {children}
-        </Modal>
-        <Overlay/>
-        </>,
+        <ModalWrap>
+            <Modal className={`modal-${props.size}`}>
+                <h3 className='modal-tit'>{props.ModalTitle}</h3>
+                <BtnClose onClick={props.onClose}> <X /></BtnClose>
+                <ModalContent>
+                    {props.children}
+                </ModalContent>
+            </Modal>
+            <Overlay onClick={props.onClose}/>
+        </ModalWrap>
+        ,
         document.getElementById('modalRoot')!
     )
 }
