@@ -13,7 +13,6 @@ const GnbWrap = styled.div`
     right: 0; 
     padding: 4rem;
     z-index: 10;
-    * {transition: all 0.2s}
     &.active {
         width: 45rem;
         min-height: 67rem;

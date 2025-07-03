@@ -1,6 +1,6 @@
 import ModalBody from './ModalBody';
 import ModalBottom from './ModalBottom';
-import Input from '../items/Input';
+import ToggleInput from '../items/ToggleInputView';
 
 function ModalSchedule(){
     return (
@@ -9,13 +9,7 @@ function ModalSchedule(){
                 <form>
                     <ul>
                         <li>
-                            <Input inputTitle="라벨1" placeholder="텍스트입력하세요1" id="inputId01"></Input>
-                        </li>
-                        <li>
-                            <Input inputTitle="라벨2" placeholder="텍스트입력하세요2" id="inputId02"></Input>
-                        </li>
-                        <li>
-                            <Input inputTitle="라벨3" placeholder="텍스트입력하세요3" id="inputId03"></Input>
+                            <ToggleInput inputTitle="방 이름" placeholder="방 이름을 입력하세요." id=""></ToggleInput>
                         </li>
                     </ul>
                     <ModalBottom>

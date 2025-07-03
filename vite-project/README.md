@@ -1,54 +1,66 @@
 # React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# todo
 
-Currently, two official plugins are available:
+# 개발 환경 및 라이브러리
+```
+### 🛠️ 기본  
+- 🟦 TypeScript 5.8.3 / Apache 2.0 License  
+- ⚡ Vite (빌드 도구) / MIT License  
+- ⚛️ React 19.1.0 / MIT License  
+- 🔀 react-router-dom 7.6.2 / MIT License  
+- 📄 html / css / JSX / TSX
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 🌐 HTTP 클라이언트  
+- 📡 axios 1.10.0
 
-## Expanding the ESLint configuration
+### 🎨 스타일링  
+- 💅 styled-components 6.1.19 / MIT License  
+- 🪐 lucide-react 0.522.0
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### 🔄 상태관리  
+- 🛠️ react-redux 9.2.0 / MIT License  
+- 📦 @reduxjs/toolkit 2.8.2  
+- 💾 redux-persist 6.0.0
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+```
+Main.tsx
+ㄴ App.tsx
+    ㄴ Login
+        ㄴMemForm
+            ㄴ MemHead
+            ㄴ MemForm
+            ㄴ MemBtn
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+    ㄴ Sign In
+        ㄴMemForm
+            ㄴ MemHead
+            ㄴ MemForm
+            ㄴ MemBtn
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+    ㄴ Today (main page)
+        ㄴ Content
+            ㄴ ContentItem
+                ㄴ ConHead
+            ㄴ Modal
+
+    ㄴ WorkSpace
+    
+    ㄴ Mypage
+
+
+modalRoot (조건부 렌더링)
+    ㄴ ModalWrap
+        ㄴ ModalSchedule
+        ㄴ ModalWork
+```
+
+```
+Font - NanumSquareRound
+```
+
+```
+디자인 (대학메일)
+https://www.figma.com/design/o2nquJnB8PgeKgAomVYQEj/todolist?node-id=0-1&p=f&t=rSaX6jebPjOsTcTo-0
 ```

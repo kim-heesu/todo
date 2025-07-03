@@ -29,6 +29,7 @@ const Modal = styled.div`
     overflow: hidden;
     transform: translate(-50%,-50%);
     .modal-tit {
+        margin-bottom: 1rem;
         padding-right: 2rem;
         font-size: 2rem;
         font-weight: 600;
@@ -38,7 +39,7 @@ const Modal = styled.div`
         height: 37rem;
     }
     &.modal-md {
-        width: 63rem;
+        width: 55rem;
         height: 48rem;
     }
 `;

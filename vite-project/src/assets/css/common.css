@@ -33,6 +33,7 @@
 
 :root {
     --yellow: #FFD438;
+    --yellowHover: #ffbf00;
     --bgGray: #F5F5F5;
     --leftShadow: -0.4rem 0.4rem 1rem 0 rgba(0,0,0,10%)
 }
@@ -77,6 +78,7 @@ form li {
     background: var(--yellow);
     border-radius: 0.5rem;
 }
+button,a {transition: all 0.2s;}
 @media screen and (max-width: 1024px) {
     html {
         font-size: 10px;

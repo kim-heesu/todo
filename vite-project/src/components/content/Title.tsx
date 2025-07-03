@@ -33,6 +33,9 @@ const Alarm = styled.span`
     font-weight: 800;
     background: var(--yellow);
     border-radius: 10em;
+    &:hover {
+        background: var(--yellowHover);
+    }
 `;
 
 function TitleCom({title,alarm}: TitleProps){
