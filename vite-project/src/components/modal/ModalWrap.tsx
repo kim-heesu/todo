@@ -22,6 +22,7 @@ const Modal = styled.div`
     position: absolute;
     top: 50%;
     left: 50%;
+    max-width: 90vw;
     background: #fff;
     border-radius: 1.5rem;
     padding: 2.4rem;

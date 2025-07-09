@@ -37,6 +37,10 @@ const InputIcon = styled.span`
     height: 2.3rem;
     margin-top: -1.15rem;
     opacity: 0.6;
+    svg {
+        width: 100%; 
+        height: 100%;
+    }
 `;
 
 const MemberInput = forwardRef<HTMLInputElement, MemInputProps>((props:MemInputProps, ref) => {

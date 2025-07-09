@@ -26,7 +26,7 @@ const HeadIcon = styled.span`
     line-height: 6.4rem;
     background: #fff;
     border-radius: 1rem;
-    box-shadow: 0.4rem 0.4rem 1rem rgba(0,0,0,0.25);
+    box-shadow: ${({theme})=>theme.colors.rightShadow};
     svg {
         width: 4.2rem;
         height: 4.2rem;

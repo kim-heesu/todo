@@ -24,14 +24,14 @@ const MemberBox = styled.div`
     position: relative;
     width: max-content;
     min-width: 500px;
-    padding: 4rem 8rem 7rem 8rem;
+    padding: 4rem 7rem 7rem 7rem;
     text-align: center;
     backdrop-filter: blur(10px);
     background: rgba(255,255,255,0.5);
-    box-shadow: 0.4rem 0.4rem 1.5rem rgba(27, 16, 16, 0.1);
+    box-shadow: ${({theme})=>theme.colors.rightShadow};
     border-radius: 2rem;
-    @media (max-width: 1080px) {
-        padding: 4rem 4rem 7rem 4rem;
+    @media (max-width:${({theme})=>theme.breakpoints.tablet}) {
+        min-width: auto;
     }
 `;
 const MemForm = styled.div`

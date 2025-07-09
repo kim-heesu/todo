@@ -18,9 +18,9 @@ const BtnSubmit = styled.button`
     height: 5.2rem;
     font-size: 2rem;
     font-weight: 800;
-    background: var(--yellow);
+    background: ${({theme})=>theme.colors.yellow};
     &:hover {
-        background: var(--yellowHover);
+        background: ${({theme})=>theme.colors.yellowHover};
     }
 `;
 
@@ -48,6 +48,9 @@ const BtnLink = styled(NavLink)`
     }
     &:hover {
         color: #000;
+    }
+    @media (max-width:${({theme})=>theme.breakpoints.tablet}) {
+        font-size: 1.2rem;
     }
 `;
 

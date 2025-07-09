@@ -8,7 +8,7 @@ import storage from 'redux-persist/lib/storage'; //LocalStorage 사용
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist:[] // 스토리지에 저장할 슬라이스 선택
+    whitelist:['userDTO'] // 스토리지에 저장할 슬라이스 선택
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -20,3 +20,5 @@ export const store = configureStore({
 });
 
 export const persistor = persistStore(store);
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

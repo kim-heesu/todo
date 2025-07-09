@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
+import { useDispatch  } from 'react-redux';
+import { reset } from '../store/slices/userInfoSlice';
+import { useNavigate } from 'react-router-dom';
+import useToggle from '../hooks/useToggle';
 import { AlignJustify , X, LogOut } from 'lucide-react';
 import styled from 'styled-components';
 import {NavLink } from 'react-router-dom';
+
 
 type GnbProps= {
     name? : string;
@@ -18,7 +23,7 @@ const GnbWrap = styled.div`
         min-height: 67rem;
         max-width: 100%;
         max-height: 100%;
-        box-shadow: var(--leftShadow);
+        box-shadow: ${({theme})=>theme.colors.leftShadow};
         background: #fff;
     }
     h2 {
@@ -49,7 +54,7 @@ const GnbWrap = styled.div`
                     transform: rotate(-45deg)
                 }
                 &.active,&:hover {
-                    background: var(--yellow);
+                    background: ${({theme})=>theme.colors.yellow};
                     color: #000;
                     font-weight: 800;
                     &::after {
@@ -70,6 +75,10 @@ const BtnMenu = styled.button`
     right: 4rem;
     width: 2.4rem;
     height: 2.4rem;
+    svg {
+        width: 100%;
+        height: 100%;
+    }
 `;
 
 const BtnLogout = styled.button`
@@ -91,10 +100,23 @@ const BtnLogout = styled.button`
 
 
 function Gnb({name}:GnbProps) {
-    const [menuOpen,setMenuOpen] = useState(false);
-    const handleMenu = ()=>{
-        setMenuOpen(prevState => !prevState )
+    const [menuOpen,handleMenu] = useToggle(false);
+    
+    //로그아웃
+    const dispatch = useDispatch();
+
+    const navigate = useNavigate(); 
+    const LogOutFunc = async(e?: React.FormEvent) =>{
+        if(confirm('로그아웃하시겠습니까?')){
+            alert('로그아웃 되었습니다.');
+            dispatch(reset());
+            navigate('/member/Login');
+        } else {
+            return;
+        }
+
     }
+
     return (
         <>
         <GnbWrap className={menuOpen?'active':''}>
@@ -107,10 +129,11 @@ function Gnb({name}:GnbProps) {
                     <nav>
                         <ul>
                             <li><NavLink to='/'>Today</NavLink></li>
-                            <li><NavLink to='/workspace'>WorkSpace</NavLink></li>
+                            <li><NavLink to='/workspace'>Work Space</NavLink></li>
+                            <li><NavLink to='/MyPage'>My Page</NavLink></li>
                         </ul>
                     </nav>
-                    <BtnLogout><LogOut /> Logout</BtnLogout>
+                    <BtnLogout onClick={LogOutFunc}><LogOut /> Logout</BtnLogout>
                 </>
             )}
             

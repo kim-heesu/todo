@@ -8,6 +8,7 @@ const BottomStyle = styled.div`
     display: flex;
     justify-content: flex-end;
     padding: 2.4rem;
+    gap: 0.4rem;
 `;
 
 type BottomProps = {

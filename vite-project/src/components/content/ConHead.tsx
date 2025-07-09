@@ -3,10 +3,10 @@ import Title from './Title.tsx';
 
 type ConHeadProps = {
     title : string;
-    btnTxt : string;
+    btnTxt? : string;
     alarm?: number;
     titleSize?: 'sm'|'md'
-    onOpen: () => void;
+    onOpen?: () => void;
 }
 
 const ContentHead = styled.div`
@@ -24,7 +24,7 @@ function ConHead(props:ConHeadProps){
         <>
             <ContentHead className={props.titleSize}>
                 <Title title={props.title} alarm={props.alarm}/>
-                <button type="button" className="btn-yellow" onClick={props.onOpen}>{props.btnTxt}</button>
+                <button type="button" className="btn-point" onClick={props.onOpen}>{props.btnTxt}</button>
             </ContentHead>   
         </>
 

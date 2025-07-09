@@ -1,3 +1,8 @@
+// 입력값검증을 위한 훅
+// 에러표현시 : setError(포커스될인풋(ref),에러문구가나올 인풋(ref), 에러문구(string));
+// 정상상태 표현시 : setNormal(에러문구가나올 인풋(ref), 에러문구(string))
+// 상태 초기화 : clearError()
+
 import { useState, useCallback, useEffect } from 'react';
 
 function useVerifi(initValue: string) {

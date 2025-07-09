@@ -2,10 +2,13 @@ import styled from 'styled-components';
 
 type InputProps= {
     inputTitle? :string;
+    inputType?:string;
+    txtType: 'read'|'add';
     size?: 'sm'|'md'|'lg';
     value? : string;
     placeholder? :string;
     id? : string;
+    onChange?: (e:React.ChangeEvent<HTMLInputElement>) => void;
 }
 const InputItem = styled.input`
     width: 100%;
@@ -18,10 +21,14 @@ const InputItem = styled.input`
     &::placeholder {color:#797979;}
     &::-webkit-input-placeholder {color:#797979;}
     &:-ms-input-placeholder {color:#797979;}
+
+    &:read-only {
+        background: #F5F5F5;
+    }
 `;
 const Label = styled.label`
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.8rem;
     font-size: 1.6rem;
     font-weight: 800;
 `;
@@ -32,7 +39,15 @@ function Input(props:InputProps){
             {props.inputTitle &&
                 <Label htmlFor={props.id}>{props.inputTitle}</Label>
             }
-            <InputItem value={props.value} placeholder={props.placeholder} id={props.id} className={`input${props.size}`} />
+            <InputItem 
+            type={props.inputType} 
+            value={props.value} 
+            placeholder={props.placeholder} 
+            id={props.id} 
+            className={`input${props.size}`} 
+            onChange={props.onChange} 
+            readOnly={props.txtType === 'read' ? true : false}
+            />
         </>
 
     )

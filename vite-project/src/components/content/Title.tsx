@@ -9,9 +9,9 @@ type TitleProps = {
 
 const TitleWrap = styled.div`
     display: flex;
+    margin-bottom: 0.57em;
 `;
 const Title = styled.h2`
-    margin-bottom: 0.57em;
     font-size: 4em;
     font-weight: 800;
 `
@@ -31,10 +31,10 @@ const Alarm = styled.span`
     padding: 0.2rem 0.7rem 0.1rem;
     font-size: 1.4rem;
     font-weight: 800;
-    background: var(--yellow);
+    background: ${({theme})=>theme.colors.yellow};
     border-radius: 10em;
     &:hover {
-        background: var(--yellowHover);
+        background: ${({theme})=>theme.colors.yellowHover};
     }
 `;
 

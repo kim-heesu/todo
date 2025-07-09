@@ -1,5 +1,8 @@
 import React, { useState,useRef } from 'react';
 import axios from 'axios';
+import { useDispatch  } from 'react-redux';
+import { editDTO } from '../../store/slices/userInfoSlice'
+import { useNavigate } from 'react-router-dom';
 import useVerifi from '../../hooks/useVerifi';
 import MemForm from '../../components/member/MemForm'
 import { ShieldUser,LockKeyhole,KeyRound } from 'lucide-react';
@@ -18,8 +21,8 @@ function LoginForm(){
 
     // 로그인 인풋 ref
     const SignRefs = {
-        email: useRef<HTMLElement>(null),
-        password: useRef<HTMLElement>(null),
+        email: useRef<HTMLInputElement>(null),
+        password: useRef<HTMLInputElement>(null),
     };
 
     // 로그인 인풋리스트
@@ -67,7 +70,8 @@ function LoginForm(){
             return true;
         }
     }
-
+    const dispatch = useDispatch();
+    const navigate = useNavigate(); 
     // 로그인요청
     const Login = async(e?: React.FormEvent) => {
         e?.preventDefault();
@@ -75,9 +79,23 @@ function LoginForm(){
 
         try {
             const res = await axios.post('/api/v1/user/login',formData);
+
+            if(res.data.status ==='success'){
+                dispatch(editDTO({
+                    email: res.data.todoUserDTO.email,
+                    id: res.data.todoUserDTO.id,
+                    password: res.data.todoUserDTO.password,
+                    username: res.data.todoUserDTO.username
+                }));
+                navigate('/');
+            } else {
+                setError(SignRefs.email,InstRef, '이메일,패스워드를 확인해주세요.');
+            }
+
             console.log('성공',res.data)
         } 
         catch (err){
+            setError(SignRefs.email,InstRef, '이메일,패스워드를 확인해주세요.');
             console.error("에러 발생", err);
         }
     };

@@ -1,11 +1,14 @@
 // App.tsx
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import Gnb from './components/Gnb';
 import TodayPage from './views/TodayPage';
 import WorkSpace from './views/WorkSpace';
 import Login from './views/member/Login';
 import SignIn from './views/member/SignIn';
+import MyPage from './views/MyPage';
 
 const Wrap = styled.div`
     position: relative;
@@ -14,25 +17,39 @@ const Wrap = styled.div`
     min-width: 320px;
     min-height: 100vh;
     display: flex;
-    gap: 30px;
-    padding: 3rem;
+    justify-content: center;
+    padding: 3rem 0;
     margin: 0 auto;
+    @media (max-width:${({theme})=>theme.breakpoints.tablet}) {
+         max-width: 90%;
+    }
 `;
 
 function RouteWrap(){
+    // 유저정보
+    const userDTO = useSelector((state) => state.userDTO);
+    console.log(userDTO)
     const location = useLocation();
+    const navigate = useNavigate(); 
+    useEffect(()=>{
+        if(!location.pathname.startsWith('/member') && userDTO.email == '') {
+            alert('로그인정보가 없습니다.');
+            navigate('/member/Login');
+        } 
+    },[location])
+
     return (
         <>  
             {!location.pathname.startsWith('/member') && 
-                <Gnb name="홍길동"/>
+                <Gnb name={userDTO.username}/>
             }
-            
             <Wrap>
                 <Routes>
                     <Route path="/" element={<TodayPage />} />
                     <Route path="/workspace" element={<WorkSpace />} />
                     <Route path="/member/Login" element={<Login />} />
                     <Route path="/member/SignIn" element={<SignIn />} />
+                    <Route path="/mypage" element={<MyPage />} />
                 </Routes>
             </Wrap>
         </>
