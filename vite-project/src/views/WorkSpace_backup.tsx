@@ -44,22 +44,60 @@ function WorkPage() {
     }
     
     // findWorkTodo의 결과를 가공해 투두 항목과 멤버 목록으로 분리
-    const [workTodoList , workMemlist] = useMemo(()=>{
-        const resResult = findWorkTodo || [];
-        const todoList = resResult.map(item => item.todoBoardDTO);
-        const memList = resResult.map(item => item.userDTO);
-        return [todoList, memList];
-    },[findWorkTodo]);
+    const [workTodoList,setWorkTodoList] = useState([]); // 투두리스트
+    const [workMemlist,setWorkMemList] = useState([]); // 투두리스트 멤버
+    useEffect(()=>{
+        let resResult = findWorkTodo;
+        let todoList: never[] = [];
+        let memList: any[] | ((prevState: never[]) => never[]) = [];
+        resResult.forEach(item => {
+            todoList.push(item.todoBoardDTO);
+            memList.push(item.userDTO)
+        });
+        setWorkTodoList(todoList)
+        setWorkMemList(memList);
+    },[findWorkTodo])
 
     // work space Todo 디테일
     const [selectedId, setSelectedId] = useState<number | null>(null);
     const [todoDetail, setTodoDetail] = useState();
     useEffect(()=>{
-        if (!selectedId) return;
-
-        const workTodoDetail = workTodoList.find(item => item.id === selectedId );
-        setTodoDetail(workTodoDetail);
+        const todoDetail = workTodoList.find(item => item.id === selectedId );
+        setTodoDetail(todoDetail);
     },[selectedId,workTodoList])
+    // const handleAddWorkTodo = (params: any) => {
+    //     axios.post('/api/v1/workspace/make-todo-board', params)
+    //     .then(res => {
+    //         console.log('추가 성공', res.data);
+    //     })
+    //     .catch(err => {
+    //         console.error('에러 발생:', err);
+    //     });
+    // };
+
+    // work space todo리스트
+    // const [workTodoList,setWorkTodoList] = useState([]); // 투두리스트
+    // const [workMemlist,setWorkMemList] = useState([]); // 투두리스트 멤버
+    // useEffect(() => {
+    //     axios.get(`/api/v1/workspace/find-todo-boards?workspaceId=${workspaceId}`)
+    //     .then((res) => {
+    //         let resResult = res.data.todoBoardAndUserDTOList;
+    //         let todoList: never[] = [];
+    //         let memList: any[] | ((prevState: never[]) => never[]) = [];
+    //         resResult.forEach(item => {
+    //             todoList.push(item.todoBoardDTO);
+    //             memList.push(item.userDTO)
+    //         });
+    //         setWorkTodoList(todoList)
+    //         setWorkMemList(memList);
+    //     })
+    //     .catch((err) => {
+    //         console.error('에러 발생:', err);
+    //     });
+    // }, [workspaceId]);
+
+
+
 
     // 워크스페이스에 속한 전체멤버
     const [allMem,setAllMem] = useState([{}]);

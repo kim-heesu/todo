@@ -1,17 +1,19 @@
 import axios from 'axios';
 import { useSelector  } from 'react-redux';
+import useToggle from '../../hooks/useToggle';
 import useInput from '../../hooks/useInput';
 import ModalBody from './ModalBody';
 import ModalBottom from './ModalBottom';
 import InputItem from '../items/Input';
 
 function ModalSchedule(){
+    const [modalOpen, handleModal] = useToggle();
     const [workName, onWorkName] = useInput('');
 
     const userDTO = useSelector((state) => state.userDTO);
     const param = {
         title: workName,
-        todoUserDTO: userDTO
+        userId: userDTO.id
     };
 
     const createWork = async() => {
@@ -21,6 +23,7 @@ function ModalSchedule(){
         }
         try {
             const res = await axios.post('/api/v1/workspace/create-workspace',param);
+            handleModal()
             console.log('성공',res.data);
         }
         catch (err){

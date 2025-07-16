@@ -28,9 +28,12 @@ const List = styled.div`
 `;
 const ListHead = styled.div`
     display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 0.4em;
+
 `;
 const ListTit = styled.strong`
     font-size: 1em;
@@ -38,18 +41,22 @@ const ListTit = styled.strong`
 `;
 const ListTime = styled.span`
     font-size : 0.7em;
-    font-weight: 800
     color: #4C4C4C;
 `;
-const ListContent = styled.p`
-    width: 100%;
-    font-size: 0.75em;
-    color: #666;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+const ListContent = styled.div`
+    .quill-text {
+        width: 100%;
+        font-size: 0.75em;
+        color: #666;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+    }
 `;
-function ListItem({list,titleSize,id,onOpen}:ListProps){
+function ListItem({list,titleSize,onOpen}:ListProps){
     const [title,setTitle] = useState('');
     const [content,setContent] = useState('');
 
@@ -63,7 +70,7 @@ function ListItem({list,titleSize,id,onOpen}:ListProps){
 
  
     return (
-        <List className={titleSize} id={id} onClick={onOpen}>
+        <List className={titleSize} onClick={onOpen}>
             <ListHead>
                 <ListTit>{title}</ListTit>
                 <ListTime>{list.todoDate}</ListTime>

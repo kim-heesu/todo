@@ -13,14 +13,14 @@ const PageHead = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    @media (max-width:${({theme})=>theme.breakpoints.tablet}) {
+        display: block;
+    }
 `;
 const HeadBtn = styled.div`
     display: flex; 
     align-items: center;
     gap: 0.4rem;
-    button {
-
-    }
 `;
 
 const MyContent = styled.div`
@@ -28,11 +28,15 @@ const MyContent = styled.div`
     gap: 3.6rem;
     align-items: center;
     padding: 3rem 0;
+    @media (max-width:${({theme})=>theme.breakpoints.tablet}) {
+        display: block;
+    }
 `;
 const UploadWrap = styled.div`
     position: relative;
     width: 20rem;
     height: 20rem;
+    margin: 0 auto;
     input {
         display: none;
     }
@@ -70,6 +74,9 @@ const UploadWrap = styled.div`
         background-size: cover;
         background-image: url(../../src/assets/img/img_base_profile.png);
         background-color: #8fcbdd;
+    }
+    @media (max-width:${({theme})=>theme.breakpoints.tablet}) {
+        margin: 2rem auto 3rem;
     }
 `;
 const MyList = styled.ul`

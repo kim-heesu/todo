@@ -15,6 +15,10 @@ import 'react-quill-new/dist/quill.snow.css';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
+type schedule = {
+    workspaceId?: string;
+    onAddTodo: (params: TodoParams) => void;
+}
 const Label = styled.label`
     display: block;
     margin-bottom: 0.8rem;
@@ -22,7 +26,7 @@ const Label = styled.label`
     font-weight: 800;
 `;
 
-function ModalSchedule(){
+function ModalSchedule({workspaceId,onAddTodo}:schedule){
     const userInfo = useSelector((state:RootState) => state.userDTO);
     const [quillValue, setQuillValue] = useState('');
     const [startDate, setStartDate] = useState(new Date());
@@ -32,23 +36,18 @@ function ModalSchedule(){
         userId: number;
         description: string;
         todoDate: Date;
+        workspaceId?: string;
     };
     const params:TodoParams = {
         userId: userInfo.id,
-        description: `${todoName}<hr>${quillValue}`,
-        todoDate: startDate
+        description: `${todoName}<hr><div class="quill-text">${quillValue}</div>`,
+        todoDate: startDate,
+        ...(workspaceId !== undefined && {workspaceId})
     }
 
-    // todo 일정추가
-    const addTodo = (): void =>{
-        axios. post('/api/v1/board/add-todo', params)
-        .then((res) => {
-            // console.log(res.data);
-        })
-        .catch((err) => {
-            console.error('에러 발생:', err);
-        });
-    }
+    const handleAddTodo = () => {
+        onAddTodo(params);
+    };
     return (
         <>
             <ModalBody>
@@ -67,7 +66,7 @@ function ModalSchedule(){
                         </li>
                     </ul>
                     <ModalBottom>
-                        <button type="button" className="btn-point" onClick={() => addTodo()}>Add +</button>
+                        <button type="button" className="btn-point" onClick={handleAddTodo}>Add +</button>
                     </ModalBottom>
                 </form>
             </ModalBody>

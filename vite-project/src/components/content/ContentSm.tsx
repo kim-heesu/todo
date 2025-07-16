@@ -16,13 +16,17 @@ type ContentProps = {
     modalTitle: string;
     modalSize : 'sm' | 'md' | 'lg';
     list?: {
+        id: number;
+        todoDate: string;
         title: string;
-        date: string;
         content: string;
     }[];
     AllMemList?: {
-        profileSrc: string;
-        name: string;
+        id: number;
+        username: string;
+        password: string;
+        email: string;
+        profilePicture: string;
     }[];
     children: React.ReactNode;
 }
@@ -88,7 +92,7 @@ function ContentSm(props: ContentProps){
                     {props.list &&
                     props.list.map((item, idx) => {
                         return (
-                        <NavLink to='/' key={idx}>
+                        <NavLink to={`/workspace/${item.id}`} key={idx}>
                             <List
                                 list={item}
                                 titleSize='sm'
@@ -101,8 +105,8 @@ function ContentSm(props: ContentProps){
                             {props.AllMemList.map((item, idx) => (
                                 <MemList
                                     key={idx}
-                                    profileSrc={item.profileSrc}
-                                    name={item.name}
+                                    profileSrc={item.profilePicture}
+                                    name={item.username}
                                 />
                             ))}
                         </MemWrap>

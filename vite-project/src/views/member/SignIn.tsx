@@ -1,8 +1,11 @@
-import MemForm from '../../components/member/MemForm';
 import React, { useState,useRef } from 'react';
-import useVerifi from '../../hooks/useVerifi';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ShieldUser,LockKeyhole,KeyRound,Mail } from 'lucide-react';
+
+import MemForm from '../../components/member/MemForm';
+import useVerifi from '../../hooks/useVerifi';
+
 
 function SignInForm(){
     const SignInTxt=`Create your account now to start organizing 
@@ -68,6 +71,7 @@ function SignInForm(){
         password : '',
         passwordChk : '',
         username : '',
+        profilePicture:'',
     });
 
     const { passwordChk,emailInvite, ...payload } = formData;
@@ -130,13 +134,23 @@ function SignInForm(){
     }
 
     // 회원가입 요청
+    const navigate = useNavigate(); 
     const SignUp = async(e?: React.FormEvent) => {
+        const formData = new FormData();
+        formData.append('email', 'cjmgmltn@naver.com');
+        formData.append('password', 'sjrnfl');
+        formData.append('username', '너구리');
+        // formData.append('profilePicture', '');
+
         e?.preventDefault();
         if (!validateSignupForm()) return;
 
         try {
-            const res = await axios.post('/api/v1/user/signup',payload);
-            console.log('성공',res.data)
+            const res = await axios.post('/api/v1/user/signup',formData,{headers:{'Content-Type':'multipart/form-data'}});
+            if(res.data.status ==='success'){
+                alert('회원가입이 완료되었습니다. 환영합니다!')
+                navigate('/member/Login');
+            }
         } 
         catch (err){
             console.error("에러 발생", err);

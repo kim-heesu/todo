@@ -129,7 +129,6 @@ function Gnb({name}:GnbProps) {
                     <nav>
                         <ul>
                             <li><NavLink to='/'>Today</NavLink></li>
-                            <li><NavLink to='/workspace'>Work Space</NavLink></li>
                             <li><NavLink to='/MyPage'>My Page</NavLink></li>
                         </ul>
                     </nav>

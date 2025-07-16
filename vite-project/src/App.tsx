@@ -28,15 +28,14 @@ const Wrap = styled.div`
 function RouteWrap(){
     // 유저정보
     const userDTO = useSelector((state) => state.userDTO);
-    console.log(userDTO)
     const location = useLocation();
     const navigate = useNavigate(); 
-    useEffect(()=>{
-        if(!location.pathname.startsWith('/member') && userDTO.email == '') {
-            alert('로그인정보가 없습니다.');
-            navigate('/member/Login');
-        } 
-    },[location])
+    // useEffect(()=>{
+    //     if(!location.pathname.startsWith('/member') && userDTO.email == '') {
+    //         alert('로그인정보가 없습니다.');
+    //         navigate('/member/Login');
+    //     } 
+    // },[location])
 
     return (
         <>  
@@ -46,7 +45,7 @@ function RouteWrap(){
             <Wrap>
                 <Routes>
                     <Route path="/" element={<TodayPage />} />
-                    <Route path="/workspace" element={<WorkSpace />} />
+                    <Route path="/workspace/:workspaceId" element={<WorkSpace />} />
                     <Route path="/member/Login" element={<Login />} />
                     <Route path="/member/SignIn" element={<SignIn />} />
                     <Route path="/mypage" element={<MyPage />} />

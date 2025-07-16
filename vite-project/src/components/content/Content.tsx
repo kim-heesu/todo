@@ -1,9 +1,12 @@
+import { useSelector, useDispatch } from 'react-redux';
+import { Children, useState } from 'react';
+
 import ConHead from './ConHead';
 import List from '../items/List';
-import useToggle from '../../hooks/useToggle';
 import styled from 'styled-components';
 import Modal from '../modal/ModalWrap';
-import { Children, useState } from 'react';
+import { setModalState } from '../../store/slices/modalToggleSlice';
+
 
 type ContentProps = {
     title : string;
@@ -11,17 +14,19 @@ type ContentProps = {
     titleSize?:'sm'|'md';
     contentSize?: 'sm'|'md';
     modalTitle: string;
+    modalReadTitle?: string;
     modalSize : 'sm' | 'md' | 'lg';
     alarm?: number;
-    list?: {
-        id: number;
-        description: string;
-        todoDate: string;
-    }[];
+    list?: [];
     workMemlist?: {
-        profileSrc: string;
-        name: string;
+        email:string;
+        id:number;
+        password:string;
+        profilePicture:string;
+        username:string;
     }[];
+
+    onRead?: (id: number) => void;
     children: React.ReactNode;
 }
 
@@ -61,8 +66,10 @@ const MemInfo = styled.div`
     }
 `;
 function Content(props: ContentProps) {
-    const [modalOpen, handleModal] = useToggle();
+    const modalToggle = useSelector((state) => state.modalToggle.modalState);
+    const modalDispatch = useDispatch();
     const [modalType, setModalType] = useState<'add'|'read'|null>(null);
+    const [modalId, setModalId] = useState(0)
     const childrenArray = Children.toArray(props.children);
     return (
         <>
@@ -72,7 +79,7 @@ function Content(props: ContentProps) {
             titleSize={props.titleSize} 
             alarm={props.alarm} 
             btnTxt={props.btnTxt} 
-            onOpen={()=>{handleModal(); setModalType('add')}} 
+            onOpen={()=>{modalDispatch(setModalState(true)); setModalType('add')}} 
             />
             {Array.isArray(props.list) &&
             props.list.map((item, idx) => {
@@ -83,8 +90,10 @@ function Content(props: ContentProps) {
                     list={item}
                     titleSize={props.titleSize}
                     onOpen={() => {
-                    handleModal();
+                    modalDispatch(setModalState(true));
                     setModalType('read');
+                    setModalId(item.id);
+                    props.onRead?.(item.id);
                     }}
                 />
                 );
@@ -93,8 +102,8 @@ function Content(props: ContentProps) {
                 return (
                     <MemberCon key={idx}>
                         <MemInfo>
-                            <div className="profile" style={{backgroundColor : `url(${props.workMemlist[idx].profileSrc})`}} ></div>
-                            <span className="name">{props.workMemlist[idx].name}</span>
+                            <div className="profile" style={{backgroundColor : `url(${props.workMemlist[idx].profilePicture})`}} ></div>
+                            <span className="name">{props.workMemlist[idx].username}</span>
                         </MemInfo>
                         {listComponent}
                     </MemberCon>
@@ -105,15 +114,27 @@ function Content(props: ContentProps) {
             })}
 
         </ContentItem>
-        <Modal
-        size={props.modalSize}
-        ModalTitle={props.modalTitle}
-        modalState={modalOpen}
-        onClose={handleModal}
-        >   
-            {modalType === 'add' && childrenArray[0]}
-            {modalType === 'read' && childrenArray[1]}
-        </Modal>
+        {modalType === 'add' && (
+            <Modal
+            size={props.modalSize}
+            ModalTitle={props.modalTitle}
+            modalState={modalToggle}
+            onClose={()=>{modalDispatch(setModalState(false))}}
+            > 
+                {childrenArray[0]}
+            </Modal>
+        )}
+        {modalType === 'read' && (
+            <Modal
+            size={props.modalSize}
+            ModalTitle={props.modalReadTitle}
+            contentId={modalId}
+            modalState={modalToggle}
+            onClose={()=>{modalDispatch(setModalState(false))}}
+            > 
+                {childrenArray[1]}
+            </Modal>
+        )}
         </>
     );
 }

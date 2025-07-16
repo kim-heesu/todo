@@ -3,7 +3,7 @@ import ModalBottom from './ModalBottom';
 import InputItem from '../items/Input';
 
 
-function ModalInbite(){
+function ModalInvite(){
     return (
         <>
             <ModalBody>
@@ -22,4 +22,4 @@ function ModalInbite(){
     )
 }
 
-export default ModalInbite;
+export default ModalInvite;
