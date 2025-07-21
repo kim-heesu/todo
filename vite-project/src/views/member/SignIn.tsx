@@ -137,9 +137,9 @@ function SignInForm(){
     const navigate = useNavigate(); 
     const SignUp = async(e?: React.FormEvent) => {
         const formData = new FormData();
-        formData.append('email', 'cjmgmltn@naver.com');
-        formData.append('password', 'sjrnfl');
-        formData.append('username', '너구리');
+        formData.append('email', formData.email);
+        formData.append('password', formData.password);
+        formData.append('username', formData.username);
         // formData.append('profilePicture', '');
 
         e?.preventDefault();

@@ -1,9 +1,8 @@
 import { useParams } from 'react-router-dom';
-import { useState, useMemo, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useState,  useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { setModalState } from '../store/slices/modalToggleSlice';
-import type { RootState } from '../store/store';
 
 import axios from 'axios';
 
@@ -44,12 +43,18 @@ function WorkPage() {
     }
     
     // findWorkTodo의 결과를 가공해 투두 항목과 멤버 목록으로 분리
-    const [workTodoList , workMemlist] = useMemo(()=>{
-        const resResult = findWorkTodo || [];
-        const todoList = resResult.map(item => item.todoBoardDTO);
-        const memList = resResult.map(item => item.userDTO);
-        return [todoList, memList];
-    },[findWorkTodo]);
+    const [workTodoList, setWorkTodoList] = useState<any[]>([]);
+    const [workMemlist, setWorkMemList] = useState<any[]>([]);
+
+    useEffect(() => {
+        if (findWorkTodo.length === 0) return;
+
+        const todoList = findWorkTodo.map(item => item.todoBoardDTO);
+        const memList = findWorkTodo.map(item => item.userDTO);
+
+        setWorkTodoList(todoList);
+        setWorkMemList(memList);
+    }, [JSON.stringify(findWorkTodo)]); 
 
     // work space Todo 디테일
     const [selectedId, setSelectedId] = useState<number | null>(null);
@@ -61,15 +66,16 @@ function WorkPage() {
         setTodoDetail(workTodoDetail);
     },[selectedId,workTodoList])
 
-    // 워크스페이스에 속한 전체멤버
-    const [allMem,setAllMem] = useState([{}]);
-    useEffect(()=>{
-        axios.get(`/api/v1/workspace/find-all-members?workspaceId=${workspaceId}`)
-        .then((res) => {
-            setAllMem(res.data.userDTOList)
+    // 워크스페이스에 속한 전체멤버   
+    const {data: allMem = []} = useQuery({
+        queryKey: ['workAllMem',workspaceId],
+        queryFn: async() => {
+            const res = await axios.get(`/api/v1/workspace/find-all-members?workspaceId=${workspaceId}`);
             console.log(res.data)
-        })
-    },[workspaceId])
+            return res.data.userDTOList
+        },
+        enabled: !!workspaceId
+    })
     
     return (
         <>  

@@ -5,7 +5,7 @@ export default defineConfig({
     plugins: [react()],
     server: {
         proxy: {
-        '/api': 'http://58.79.118.105',
+        '/api': 'http://knou.pared.kr',
         },
     },
 });

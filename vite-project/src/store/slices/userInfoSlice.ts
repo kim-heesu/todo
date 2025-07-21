@@ -6,13 +6,15 @@ interface TodoUserDTO {
     id: string;
     password: string;
     username: string;
+    profilePicture: any;
 };
 
 const initialState: TodoUserDTO = {
   email: '',
   id: '',
   password: '',
-  username: ''
+  username: '',
+  profilePicture:''
 };
 
 const userDTOSlice = createSlice({

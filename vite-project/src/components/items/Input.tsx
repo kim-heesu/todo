@@ -1,10 +1,9 @@
 import styled from 'styled-components';
 
-type InputProps= {
+type InputProps = {
     inputTitle? :string;
     inputType?:string;
     txtType: 'read'|'add';
-    size?: 'sm'|'md'|'lg';
     value? : string;
     placeholder? :string;
     id? : string;
@@ -23,7 +22,7 @@ const InputItem = styled.input`
     &:-ms-input-placeholder {color:#797979;}
 
     &:read-only {
-        background: #F5F5F5;
+        background: #e3e3e3;
     }
 `;
 const Label = styled.label`
@@ -44,7 +43,6 @@ function Input(props:InputProps){
             value={props.value} 
             placeholder={props.placeholder} 
             id={props.id} 
-            className={`input${props.size}`} 
             onChange={props.onChange} 
             readOnly={props.txtType === 'read' ? true : false}
             />

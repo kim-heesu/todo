@@ -8,6 +8,7 @@ import Modal from '../modal/ModalWrap';
 import ConHead from './ConHead';
 import List from '../items/List';
 import MemList from '../items/MemList';
+import Empty from './EmptyCon';
 
 type ContentProps = {
     title : string;
@@ -89,26 +90,31 @@ function ContentSm(props: ContentProps){
                     btnTxt={props.btnTxt} 
                     onOpen={handleModal}
                     />
-                    {props.list &&
-                    props.list.map((item, idx) => {
-                        return (
-                        <NavLink to={`/workspace/${item.id}`} key={idx}>
-                            <List
-                                list={item}
-                                titleSize='sm'
-                            />
-                        </NavLink>
-                        );
-                    })}
+                    {props.list && (
+                        props.list.length > 0 ? props.list.map((item, idx) => {
+                            return (
+                            <NavLink to={`/workspace/${item.id}`} key={idx}>
+                                <List
+                                    list={item}
+                                    titleSize='sm'
+                                />
+                            </NavLink>
+                            );
+                        }) : <Empty />
+                    )}
                     {props.AllMemList && (
                         <MemWrap>
-                            {props.AllMemList.map((item, idx) => (
-                                <MemList
-                                    key={idx}
-                                    profileSrc={item.profilePicture}
-                                    name={item.username}
-                                />
-                            ))}
+                            {props.AllMemList && (
+                                props.AllMemList.length > 0 ? props.AllMemList.map((item, idx) => {
+                                    return (
+                                    <MemList
+                                        key={idx}
+                                        profileSrc={item.profilePicture}
+                                        name={item.username}
+                                    />
+                                    );
+                                }) : <Empty />
+                            )}
                         </MemWrap>
                     )}
 

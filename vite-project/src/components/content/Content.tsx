@@ -1,11 +1,13 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { Children, useState } from 'react';
+import { setModalState } from '../../store/slices/modalToggleSlice';
 
 import ConHead from './ConHead';
 import List from '../items/List';
 import styled from 'styled-components';
 import Modal from '../modal/ModalWrap';
-import { setModalState } from '../../store/slices/modalToggleSlice';
+import Empty from './EmptyCon';
+
 
 
 type ContentProps = {
@@ -82,36 +84,38 @@ function Content(props: ContentProps) {
             onOpen={()=>{modalDispatch(setModalState(true)); setModalType('add')}} 
             />
             {Array.isArray(props.list) &&
-            props.list.map((item, idx) => {
-                const listComponent = (
-                <List
-                    key={item.id}
-                    id={item.id}
-                    list={item}
-                    titleSize={props.titleSize}
-                    onOpen={() => {
-                    modalDispatch(setModalState(true));
-                    setModalType('read');
-                    setModalId(item.id);
-                    props.onRead?.(item.id);
-                    }}
-                />
-                );
+            (props.list.length > 0 ? 
+                props.list.map((item, idx) => {
+                    const listComponent = (
+                    <List
+                        key={item.id}
+                        id={item.id}
+                        list={item}
+                        titleSize={props.titleSize}
+                        onOpen={() => {
+                        modalDispatch(setModalState(true));
+                        setModalType('read');
+                        setModalId(item.id);
+                        props.onRead?.(item.id);
+                        }}
+                    />
+                    );
 
-                if (props.workMemlist) {
-                return (
-                    <MemberCon key={idx}>
-                        <MemInfo>
-                            <div className="profile" style={{backgroundColor : `url(${props.workMemlist[idx].profilePicture})`}} ></div>
-                            <span className="name">{props.workMemlist[idx].username}</span>
-                        </MemInfo>
-                        {listComponent}
-                    </MemberCon>
-                );
-                }
+                    if (props.workMemlist) {
+                    return (
+                        <MemberCon key={idx}>
+                            <MemInfo>
+                                <div className="profile" style={{backgroundImage : `url(http://knou.pared.kr/uploads/${props.workMemlist[idx].profilePicture})`}} ></div>
+                                <span className="name">{props.workMemlist[idx].username}</span>
+                            </MemInfo>
+                            {listComponent}
+                        </MemberCon>
+                    );
+                    }
 
-                return <div key={idx}>{listComponent}</div>;
-            })}
+                    return <div key={idx}>{listComponent}</div>;
+                })
+            : <Empty />)}
 
         </ContentItem>
         {modalType === 'add' && (

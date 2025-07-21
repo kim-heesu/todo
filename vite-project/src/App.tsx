@@ -3,12 +3,14 @@ import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-ro
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import styled from 'styled-components';
+
 import Gnb from './components/Gnb';
 import TodayPage from './views/TodayPage';
 import WorkSpace from './views/WorkSpace';
 import Login from './views/member/Login';
 import SignIn from './views/member/SignIn';
 import MyPage from './views/MyPage';
+import NotFound from './views/NotFound';
 
 const Wrap = styled.div`
     position: relative;
@@ -30,12 +32,12 @@ function RouteWrap(){
     const userDTO = useSelector((state) => state.userDTO);
     const location = useLocation();
     const navigate = useNavigate(); 
-    // useEffect(()=>{
-    //     if(!location.pathname.startsWith('/member') && userDTO.email == '') {
-    //         alert('로그인정보가 없습니다.');
-    //         navigate('/member/Login');
-    //     } 
-    // },[location])
+    useEffect(()=>{
+        if(!location.pathname.startsWith('/member') && userDTO.email == '') {
+            alert('로그인정보가 없습니다.');
+            navigate('/member/Login');
+        } 
+    },[location])
 
     return (
         <>  
@@ -49,6 +51,7 @@ function RouteWrap(){
                     <Route path="/member/Login" element={<Login />} />
                     <Route path="/member/SignIn" element={<SignIn />} />
                     <Route path="/mypage" element={<MyPage />} />
+                    <Route path="*" element={<NotFound />}/>
                 </Routes>
             </Wrap>
         </>

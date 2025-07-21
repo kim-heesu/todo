@@ -8,10 +8,6 @@ import MemForm from '../../components/member/MemForm'
 import { ShieldUser,LockKeyhole,KeyRound } from 'lucide-react';
 
 function LoginForm(){
-    // 테스트계정
-    // "email":"email@ema2il.c2o2m",
-    // "password":"password"
-
     const LoginTxt=`Log in now to access your to-do list, stay organized,\n  and start checking off tasks to boost your daily productivity.`;
 
     const { MSG, setError, clearError } = useVerifi('');
@@ -85,7 +81,8 @@ function LoginForm(){
                     email: res.data.todoUserDTO.email,
                     id: res.data.todoUserDTO.id,
                     password: res.data.todoUserDTO.password,
-                    username: res.data.todoUserDTO.username
+                    username: res.data.todoUserDTO.username,
+                    profilePicture: res.data.todoUserDTO.profilePicture
                 }));
                 navigate('/');
             } else {
