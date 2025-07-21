@@ -48,8 +48,9 @@ function WorkPage() {
 
     useEffect(() => {
         if (findWorkTodo.length === 0) return;
-
+        // @ts-ignore
         const todoList = findWorkTodo.map(item => item.todoBoardDTO);
+        // @ts-ignore
         const memList = findWorkTodo.map(item => item.userDTO);
 
         setWorkTodoList(todoList);

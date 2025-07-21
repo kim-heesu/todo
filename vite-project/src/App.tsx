@@ -2,6 +2,7 @@
 import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import type { RootState } from './store/store';
 import styled from 'styled-components';
 
 import Gnb from './components/Gnb';
@@ -29,7 +30,7 @@ const Wrap = styled.div`
 
 function RouteWrap(){
     // 유저정보
-    const userDTO = useSelector((state) => state.userDTO);
+    const userDTO = useSelector((state:RootState) => state.userDTO);
     const location = useLocation();
     const navigate = useNavigate(); 
     useEffect(()=>{

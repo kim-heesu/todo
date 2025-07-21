@@ -11,3 +11,5 @@ export const theme = {
         tablet: '1024px',
     }
 };
+
+export type ThemeType = typeof theme;

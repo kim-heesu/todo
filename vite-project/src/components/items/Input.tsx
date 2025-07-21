@@ -3,13 +3,15 @@ import styled from 'styled-components';
 type InputProps = {
     inputTitle? :string;
     inputType?:string;
-    txtType: 'read'|'add';
+    txtType?: 'read'|'add';
     value? : string;
     placeholder? :string;
     id? : string;
     onChange?: (e:React.ChangeEvent<HTMLInputElement>) => void;
 }
-const InputItem = styled.input`
+const InputItem = styled.input.attrs<InputProps>(props => ({
+    readOnly: props.txtType === 'read',
+}))`
     width: 100%;
     height: 3.4rem;
     padding: 0.8rem 1.2rem;
@@ -17,9 +19,9 @@ const InputItem = styled.input`
     border: 1px solid #D9D9D9;
     border-radius: 0.2em;
 
-    &::placeholder {color:#797979;}
-    &::-webkit-input-placeholder {color:#797979;}
-    &:-ms-input-placeholder {color:#797979;}
+    &::placeholder {
+        color: #797979;
+    }
 
     &:read-only {
         background: #e3e3e3;

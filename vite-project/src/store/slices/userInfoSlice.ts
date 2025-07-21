@@ -24,7 +24,7 @@ const userDTOSlice = createSlice({
         editDTO(state, action: PayloadAction<Partial<TodoUserDTO>>) {
         Object.assign(state, action.payload);
         },
-        reset(state) { // 초기상태로 리셋할때 사용
+        reset() { // 초기상태로 리셋할때 사용
             return initialState;
         }
     },

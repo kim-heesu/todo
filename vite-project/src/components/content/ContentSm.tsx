@@ -19,8 +19,7 @@ type ContentProps = {
     list?: {
         id: number;
         todoDate: string;
-        title: string;
-        content: string;
+        description: string;
     }[];
     AllMemList?: {
         id: number;
@@ -95,6 +94,7 @@ function ContentSm(props: ContentProps){
                             return (
                             <NavLink to={`/workspace/${item.id}`} key={idx}>
                                 <List
+                                // @ts-ignore
                                     list={item}
                                     titleSize='sm'
                                 />

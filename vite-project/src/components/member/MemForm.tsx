@@ -4,12 +4,22 @@ import Meminput from '../items/MemInput';
 import MemBtn from '../member/MemBtn';
 import BgCircle from '../member/FloatingCircle'
 
+type FormItem = {
+    inputId: string;
+    inputType: string;
+    inputName: string;
+    inputPlace?: string;
+    icon?: React.ReactNode;
+    invite?: boolean;
+    ref?: React.Ref<HTMLInputElement>;
+};
+
 type formProps = {
     headTitle: string;
     headTxt:string;
     formList: FormItem[],
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    onInvite: () => void;
+    onInvite?: () => void;
     onSubmit: () => void;
     submitTxt: string;
     linkTxt: string;
@@ -17,7 +27,7 @@ type formProps = {
     headIcon?: React.ReactNode; 
     instMSG?: string;
     ref?: React.Ref<HTMLInputElement>;
-    InstRef: React.RefObject<HTMLParagraphElement>;
+    InstRef: React.Ref<HTMLInputElement>;
 }
 
 const MemberBox = styled.div`

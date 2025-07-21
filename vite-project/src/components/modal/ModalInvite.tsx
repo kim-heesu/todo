@@ -28,7 +28,7 @@ function ModalInvite(){
     const [memUserId,setMemUserId] = useState(0)
     const [memWorkName,setMemWorkName] = useState('')
 
-    const searchMember = async(e) => {
+    const searchMember = async(e: { preventDefault: () => void; }) => {
         e.preventDefault();
         if(inviteMem === '') {
             alert('이메일을 입력하세요!')
@@ -57,7 +57,7 @@ function ModalInvite(){
         workspaceId: number,
         title: string
     }
-    const inviteMember = async(e) => {
+    const inviteMember = async(e: { preventDefault: () => void; }) => {
         e.preventDefault();
         const formData : formDataType = {
             email: inviteMem,
@@ -69,7 +69,9 @@ function ModalInvite(){
             return
         }
         try {
-            const res = await axios.get('/api/v1/user/search-email',formData);
+            const res = await axios.get('/api/v1/user/search-email', {
+                params: formData
+            });
             console.log(res)
         }
         catch (err){
@@ -88,7 +90,7 @@ function ModalInvite(){
                         </li>
                     </ul>
                     <ModalBottom>
-                        <button type="submit" className="btn-point">invite +</button>
+                        <button type="submit" className="btn-point" onClick={inviteMember}>invite +</button>
                     </ModalBottom>
                 </form>
             </ModalBody>

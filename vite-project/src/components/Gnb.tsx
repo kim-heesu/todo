@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { useDispatch  } from 'react-redux';
 import { reset } from '../store/slices/userInfoSlice';
 import { useNavigate } from 'react-router-dom';
@@ -106,7 +105,7 @@ function Gnb({name}:GnbProps) {
     const dispatch = useDispatch();
 
     const navigate = useNavigate(); 
-    const LogOutFunc = async(e?: React.FormEvent) =>{
+    const LogOutFunc = async() =>{
         if(confirm('로그아웃하시겠습니까?')){
             alert('로그아웃 되었습니다.');
             dispatch(reset());

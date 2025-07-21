@@ -1,29 +1,26 @@
-// 입력값검증을 위한 훅
-// 에러표현시 : setError(포커스될인풋(ref),에러문구가나올 인풋(ref), 에러문구(string));
-// 정상상태 표현시 : setNormal(에러문구가나올 인풋(ref), 에러문구(string))
-// 상태 초기화 : clearError()
-
 import { useState, useCallback, useEffect } from 'react';
 
 function useVerifi(initValue: string) {
     const [MSG, setMSG] = useState(initValue);
     const [status, setStatus] = useState<'normal' | 'error' | null>(null);
-    const [msgRef, setMsgRef] = useState<React.RefObject<HTMLElement> | null>(null);
-    const [focusRef, setFocusRef] = useState<React.RefObject<HTMLElement> | null>(null);
+
+    // 여기를 <HTMLInputElement | null> 로 바꾸고 초기값 null 로 둠
+    const [msgRef, setMsgRef] = useState<React.RefObject<HTMLInputElement | null> | null>(null);
+    const [focusRef, setFocusRef] = useState<React.RefObject<HTMLInputElement | null> | null>(null);
 
     const setError = useCallback((
-        inputRef: React.RefObject<HTMLElement>,
-        messageRef: React.RefObject<HTMLElement>,
+        inputRef: React.RefObject<HTMLInputElement | null> | null,
+        messageRef: React.RefObject<HTMLInputElement | null> | null,
         message: string
     ) => {
         setMSG(message);
         setStatus('error');
         setMsgRef(messageRef);
-        setFocusRef(inputRef); // 포커스 대상 등록만
+        setFocusRef(inputRef);
     }, []);
 
     const setNormal = useCallback((
-        messageRef: React.RefObject<HTMLElement>,
+        messageRef: React.RefObject<HTMLInputElement | null> | null,
         message: string
     ) => {
         setMSG(message);
@@ -31,14 +28,16 @@ function useVerifi(initValue: string) {
         setMsgRef(messageRef);
     }, []);
 
-    const clearError = useCallback((messageRef: React.RefObject<HTMLElement>) => {
+    const clearError = useCallback((
+        messageRef: React.RefObject<HTMLInputElement | null> | null
+    ) => {
         setMSG('');
         setStatus(null);
         setMsgRef(messageRef);
     }, []);
 
     useEffect(() => {
-        if (!msgRef?.current ) return;
+        if (!msgRef?.current) return;
 
         const msgEl = msgRef.current;
         if (status === 'error') {
@@ -56,13 +55,14 @@ function useVerifi(initValue: string) {
     useEffect(() => {
         let AllInput = document.querySelectorAll('input');
         AllInput.forEach(element => {
-            element.classList.remove('error')
+            element.classList.remove('error');
         });
         if (focusRef?.current) {
             focusRef.current.focus();
-            focusRef.current.classList.add('error')
+            focusRef.current.classList.add('error');
         }
     }, [focusRef]);
+
     return { MSG, setError, setNormal, clearError };
 }
 

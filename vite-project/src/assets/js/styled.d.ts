@@ -1,1 +1,6 @@
-// theme.ts 의 타입을 지정, 나중에 추가예정
+import 'styled-components';
+import { ThemeType } from './theme';
+
+declare module 'styled-components' {
+    export interface DefaultTheme extends ThemeType {}
+}

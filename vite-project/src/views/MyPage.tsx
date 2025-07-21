@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import useInput from "../hooks/useInput";
 import { useDispatch  } from 'react-redux';
+import type { RootState } from "../store/store";
 import { editDTO, reset } from '../store/slices/userInfoSlice'
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
@@ -93,7 +94,7 @@ const MyList = styled.ul`
 
 function MyPage(){
     // 유저 정보
-    const userDTO = useSelector((state)=> state.userDTO);
+    const userDTO = useSelector((state:RootState)=> state.userDTO);
 
     // 이미지 업로드, 업로드한 이미지 미리보기
     const [preview, setPreview] = useState<string | null>(`http://knou.pared.kr/uploads/${userDTO.profilePicture}`);
@@ -172,7 +173,7 @@ function MyPage(){
 
     // 회원 탈퇴
     const navigate = useNavigate();
-    const deleteUser = async(e: React.SyntheticEvent) => {
+    const deleteUser = async() => {
         if(confirm('탈퇴하시겠습니까?')) {
             try {
                 const res = await axios.post(`/api/v1/user/delete-user/${userDTO.id}`);
@@ -181,6 +182,7 @@ function MyPage(){
                 alert('탈퇴되었습니다.');
                 navigate('/member/login');
                 dispatch(reset());
+                console.log(res)
             }
             catch(err) {
                 console.log(err)

@@ -3,13 +3,15 @@ import { useState, useEffect } from "react";
 import DOMPurify from 'dompurify';
 
 type ListProps = {
-    id: number,
+    id?: number,
     titleSize? : 'sm'|'md';
     onOpen?: () => void;
     list: {
         id: number;
-        description: string;
         todoDate: string;
+        title?: string;
+        content?: string;
+        description: string;
     };
 }
 

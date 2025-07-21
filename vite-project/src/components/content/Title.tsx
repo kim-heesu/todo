@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled  from "styled-components";
 import { Bell } from 'lucide-react';
 
@@ -41,7 +41,9 @@ const Alarm = styled.span`
 function TitleCom({title,alarm}: TitleProps){
     const [alarmNum,setAlarmNum] = useState(alarm)
     useEffect(()=>{
-        setAlarmNum(alarm > 99 ? 99 : alarm)
+        if(alarm) {
+            setAlarmNum(alarm > 99 ? 99 : alarm)
+        }
     },[alarm])
     return (
         <TitleWrap>

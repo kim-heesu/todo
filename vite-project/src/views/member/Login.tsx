@@ -13,7 +13,7 @@ function LoginForm(){
     const { MSG, setError, clearError } = useVerifi('');
 
     // 유효성 검사 메시지 영역
-    const InstRef = useRef<HTMLElement>(null);
+    const InstRef = useRef<HTMLInputElement>(null);
 
     // 로그인 인풋 ref
     const SignRefs = {
@@ -62,7 +62,7 @@ function LoginForm(){
             setError(SignRefs.password,InstRef, '패스워드를 입력해주세요');
             return false;
         } else {
-            clearError()
+            clearError(InstRef)
             return true;
         }
     }

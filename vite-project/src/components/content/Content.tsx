@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { Children, useState } from 'react';
+import type { RootState } from '../../store/store';
 import { setModalState } from '../../store/slices/modalToggleSlice';
 
 import ConHead from './ConHead';
@@ -7,8 +8,6 @@ import List from '../items/List';
 import styled from 'styled-components';
 import Modal from '../modal/ModalWrap';
 import Empty from './EmptyCon';
-
-
 
 type ContentProps = {
     title : string;
@@ -19,7 +18,13 @@ type ContentProps = {
     modalReadTitle?: string;
     modalSize : 'sm' | 'md' | 'lg';
     alarm?: number;
-    list?: [];
+    list?: {
+        id: number;
+        todoDate: string;
+        title: string;
+        content: string;
+        description: string;
+    }[];
     workMemlist?: {
         email:string;
         id:number;
@@ -68,7 +73,7 @@ const MemInfo = styled.div`
     }
 `;
 function Content(props: ContentProps) {
-    const modalToggle = useSelector((state) => state.modalToggle.modalState);
+    const modalToggle = useSelector((state:RootState) => state.modalToggle.modalState) as boolean;
     const modalDispatch = useDispatch();
     const [modalType, setModalType] = useState<'add'|'read'|null>(null);
     const [modalId, setModalId] = useState(0)

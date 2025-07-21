@@ -1,21 +1,22 @@
 import axios from 'axios';
-import { useSelector  } from 'react-redux';
-import useToggle from '../../hooks/useToggle';
+import { useSelector, useDispatch  } from 'react-redux';
+import { setModalState } from '../../store/slices/modalToggleSlice';
 import useInput from '../../hooks/useInput';
 import ModalBody from './ModalBody';
 import ModalBottom from './ModalBottom';
 import InputItem from '../items/Input';
+import type { RootState } from '../../store/store';
 
 function ModalSchedule(){
-    const [modalOpen, handleModal] = useToggle();
     const [workName, onWorkName] = useInput('');
 
-    const userDTO = useSelector((state) => state.userDTO);
+    const userDTO = useSelector((state:RootState) => state.userDTO);
     const param = {
         title: workName,
         userId: userDTO.id
     };
 
+    const modalDispatch = useDispatch();
     const createWork = async() => {
         if(workName === ''){
             alert('방이름을 입력해주세요')
@@ -23,7 +24,7 @@ function ModalSchedule(){
         }
         try {
             const res = await axios.post('/api/v1/workspace/create-workspace',param);
-            handleModal()
+            modalDispatch(setModalState(false))
             console.log('성공',res.data);
         }
         catch (err){
